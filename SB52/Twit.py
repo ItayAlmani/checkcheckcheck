@@ -5,7 +5,7 @@ class Twit:
 
 	def __init__(self, date, time, raw_text, 
 			related_team, related_nick_name,
-			pos, neg, plutchik, neutral, emotion_cnt):
+			pos, neg, plutchik, neutral):
 
 		self._id = next(Twit._newid)
 		self._date = date
@@ -17,7 +17,7 @@ class Twit:
 		self._related_nick_name = related_nick_name
 		self._related_team = related_team
 		self._plutchik_emotions = plutchik 
-		self._emotion_signal = emotion_cnt
+		#self._emotion_signal = emotion_cnt
 
 		
 

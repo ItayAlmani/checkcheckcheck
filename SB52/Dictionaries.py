@@ -19,7 +19,7 @@ class Dictionnaires():
 	def getTxt(self, txtName):
 		fileRead = None
 		try:
-			with open(txtName, "rt") as fileRead:
+			with open(txtName, "rt", encoding="utf8") as fileRead:
 				fileRead = fileRead.read().split("\n")
 		except FileNotFoundError:
 			print("FDictionaryile not found")

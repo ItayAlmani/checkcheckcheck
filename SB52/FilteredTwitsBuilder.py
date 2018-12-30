@@ -14,8 +14,8 @@ character_replacements = [
     ('\\u2026', '...'), # HORIZONTAL ELLIPSIS
 ]
 
-eagles_ref = ["doug pederson", "nick foles", "fletcher cox", "jason peter", "malcolm jenkins", "rodney mcleod"]
-patriots_ref = ["bill belichick", "tom brady", "stephon gilmore", "devin mccourty", "rob gronkowski", "dont'a hightower" ]
+eagles_ref = ["doug pederson", "zach ertz","corey clement", "jake elliott", "legarrette blount" ,"nick foles", "fletcher cox", "jason peter", "malcolm jenkins", "rodney mcleod"]
+patriots_ref = ["bill belichick", "tom brady", "chris hogan","james white","stephen gostkowski" ,"stephon gilmore", "devin mccourty", "rob gronkowski", "dont'a hightower" ]
 
 class FilteredTwitsBuilder:
 	def __init__(self):
@@ -29,9 +29,9 @@ class FilteredTwitsBuilder:
 	def read_from_csv(self):
 		with open(r"C:\Users\itaia\Desktop\Data.csv", encoding='utf-8') as csv_file:
 			START_POINT = 56590
-			END_POINT = 70889
-			#START_POINT = 60000
-			#END_POINT = 60300
+			END_POINT = 71250
+			#START_POINT = 56590
+			#END_POINT = 59000
 			data = csv.reader(csv_file)
 			for row in itertools.islice(data,START_POINT,END_POINT):
 				del row[-1]
@@ -55,9 +55,11 @@ class FilteredTwitsBuilder:
 							plutchik_flag = 1
 							break
 					if ((emotions_list[0] == emotions_list[1]) and (plutchik_flag ==1)):
+						if (len(self._filtered_twit_list) == 66):
+							print("h")
 						self._filtered_twit_list.append(Twit(row[0], row[1], words, 
 														temp_nicknames_list[0], temp_nicknames_list[1], 
-														emotions_list[0], emotions_list[1],emotions_list[2],1, emotions_list[3]))
+														emotions_list[0], emotions_list[1],emotions_list[2],1))
 						tuple_twit = (row[0], row[1], words, 
 									temp_nicknames_list[0], temp_nicknames_list[1],
 									emotions_list[0], emotions_list[1], emotions_list[2],1, emotions_list[3])
@@ -67,7 +69,7 @@ class FilteredTwitsBuilder:
 					elif (emotions_list[0] != emotions_list[1]):
 						self._filtered_twit_list.append(Twit(row[0], row[1], words, 
 														temp_nicknames_list[0], temp_nicknames_list[1], 
-														emotions_list[0], emotions_list[1], emotions_list[2],0, emotions_list[3]))
+														emotions_list[0], emotions_list[1], emotions_list[2],0))
 						tuple_twit = (row[0], row[1], words, 
 									temp_nicknames_list[0], temp_nicknames_list[1],
 									emotions_list[0], emotions_list[1],emotions_list[2],0, emotions_list[3])
@@ -126,8 +128,8 @@ class FilteredTwitsBuilder:
 		eag_cnt = 0
 		nick_names = []
 		team_nick_names = []
-		nick_names_eag = {"doug pederson" : 0, "nick foles" : 0, "fletcher cox" : 0, "jason peter" : 0, "malcolm jenkins" : 0, "rodney mcleod" : 0}
-		nick_names_pat = {"bill belichick" : 0, "tom brady" : 0, "stephon gilmore" : 0, "devin mccourty" : 0, "rob gronkowski" : 0, "dont'a hightower" : 0} 
+		nick_names_eag = {"jake elliott" : 0, "legarrette blount" : 0, "zach ertz" : 0, "corey clement" : 0, "doug pederson" : 0, "nick foles" : 0, "fletcher cox" : 0, "jason peter" : 0, "malcolm jenkins" : 0, "rodney mcleod" : 0}
+		nick_names_pat = {"chris hogan" : 0,"james white" : 0,"stephen gostkowski" : 0,"bill belichick" : 0, "tom brady" : 0, "stephon gilmore" : 0, "devin mccourty" : 0, "rob gronkowski" : 0, "dont'a hightower" : 0} 
 		
 		for word in text_list:
 			for key in dict.keys():
@@ -158,6 +160,7 @@ class FilteredTwitsBuilder:
 				try:
 					eagles_ref.index(name)
 					nick_names_eag[name]+=1
+
 				except ValueError:
 					try:
 						patriots_ref.index(name)
@@ -333,42 +336,62 @@ class FilteredTwitsBuilder:
 		for emotion in emotions_list:
 			if (emotion == "positive"):
 				pos -= 1
+				if (pos < 0):
+					pos = 0
 				neg += 1
 				continue
 			if (emotion == "negative"):
 				pos += 1
 				neg -= 1
+				if (neg < 0):
+					neg = 0
 				continue
 			if (emotion == "anger"):
 				plutchik[0] -= 1
+				if (plutchik[0] < 0):
+					plutchik[0] = 0
 				plutchik[3] += 1
 				continue
 			if (emotion == "anticipation"):
 				plutchik[1] -= 1
+				if (plutchik[1] < 0):
+					plutchik[1] = 0
 				plutchik[6] += 1
 				continue
 			if (emotion == "disgust"):
 				plutchik[2] -= 1
+				if (plutchik[2] < 0):
+					plutchik[2] = 0
 				plutchik[7] += 1
 				continue
 			if (emotion == "fear"):
 				plutchik[3] -= 1
+				if (plutchik[3] < 0):
+					plutchik[3] = 0
 				plutchik[0] += 1
 				continue
 			if (emotion == "joy"):
 				plutchik[4] -= 1
+				if (plutchik[4] < 0):
+					plutchik[4] = 0
 				plutchik[5] += 1
 				continue
 			if (emotion == "sadness"):
 				plutchik[5] -= 1
+				if (plutchik[5] < 0):
+					plutchik[5] = 0
 				plutchik[4] += 1
 				continue
 			if (emotion == "surprise"):
 				plutchik[6] -= 1
+				if (plutchik[6] < 0):
+					plutchik[6] = 0
 				plutchik[1] += 1
 				continue
 			if (emotion == "trust"):
 				plutchik[7] -= 1
+				if (plutchik[7] < 0):
+					plutchik[7] = 0
 				plutchik[2] += 1
 				continue
 		if(pos < 0):
@@ -465,15 +488,6 @@ class FilteredTwitsBuilder:
 		return returned_list
 		
 		
-	#Not Done		
-	def ExportToCsv(self, filtered_twits_list):
-		with open(r"C:\Users\itaia\Desktop\FilteredData.csv", "wb") as out:
-			for twit in filtered_twits_list:
-				csv_file = csv.writer(out)
-				for row in filtered_twits_list:
-					csv_file.writerow(row)
-
-
 
 			
 	

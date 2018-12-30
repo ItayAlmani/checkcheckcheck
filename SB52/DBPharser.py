@@ -21,7 +21,7 @@ class DBPharser():
 		self._cursor = self._db.cursor()
 		#insert_stmt = "INSERT INTO twit(date,time,raw,team,nickname,positive,negative,anger,anticipation,disgust,fear,joy,sadness,surprise,trust,ntrl,signal) " \
 		#	"VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-		insert_stmt = "INSERT INTO twit VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+		insert_stmt = "INSERT INTO twit VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 		
 		for twit in self._twits_list_to_DB:
 			data = self.ConvertDataToTuple(twit)
@@ -46,11 +46,10 @@ class DBPharser():
 		surprise = twit._plutchik_emotions[6]
 		trust = twit._plutchik_emotions[7]
 		ntrl = twit._neutral_flag
-		signal = twit._emotion_signal
 
 		data = (id, date, time, raw, team, nickname, 
 				pos, neg, anger, anticipation, disgust, fear,
-			    joy, sadness, surprise, trust, ntrl, signal)
+			    joy, sadness, surprise, trust, ntrl)
 
 		return data
 
